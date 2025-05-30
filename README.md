@@ -116,7 +116,7 @@ Os dados enviados via MQTT estão estruturados em formato JSON. Isso permite:
 ![Estrutura Node-RED](./assets/estruturaNodeRed.png)
 
 ### 3. Dashboard em Tempo Real no Node-RED
-![Dashboard Node-RED](./assets/nodeRedDashBoard.png)
+![Dashboard Node-RED](./assets/nodeRedDashboard.png)
 
 ---
 
