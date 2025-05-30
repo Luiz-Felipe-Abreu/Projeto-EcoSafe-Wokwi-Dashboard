@@ -1,0 +1,260 @@
+[
+    {
+        "id": "f1ebeeacd467ba8f",
+        "type": "tab",
+        "label": "EcoSafe via HiveMQ",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8a24f26091ca9788",
+        "type": "mqtt in",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Receber JSON completo",
+        "topic": "ecofire/fumaca",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3c3cf10796c46c0b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "896b7cda2f1af463"
+            ]
+        ]
+    },
+    {
+        "id": "896b7cda2f1af463",
+        "type": "json",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Parse JSON",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "a224f49ade18da0c"
+            ]
+        ]
+    },
+    {
+        "id": "a224f49ade18da0c",
+        "type": "function",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Separar Dados",
+        "func": "return [\n { payload: msg.payload.smoke },\n { payload: msg.payload.wind },\n { payload: msg.payload.water },\n { payload: msg.payload.smoke },\n { payload: msg.payload.risk }\n];",
+        "outputs": 5,
+        "noerr": 0,
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "e85a24b3bf7aac75"
+            ],
+            [
+                "86e139cbaa79ff19"
+            ],
+            [
+                "bc9cb1f61ada9c65"
+            ],
+            [
+                "e563020d76d11c65"
+            ],
+            [
+                "faea8032daadd538"
+            ]
+        ]
+    },
+    {
+        "id": "e85a24b3bf7aac75",
+        "type": "ui_gauge",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Fumaça",
+        "group": "grupo-fumaca",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Fumaça (ppm)",
+        "label": "ppm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 1000,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 300,
+        "seg2": 700,
+        "x": 850,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "86e139cbaa79ff19",
+        "type": "ui_gauge",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Vento",
+        "group": "grupo-vento",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Vento (km/h)",
+        "label": "km/h",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 120,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 40,
+        "seg2": 80,
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "bc9cb1f61ada9c65",
+        "type": "ui_gauge",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Água",
+        "group": "grupo-agua",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Nível da Água (cm)",
+        "label": "cm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 150,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 50,
+        "seg2": 100,
+        "x": 850,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e563020d76d11c65",
+        "type": "ui_chart",
+        "z": "f1ebeeacd467ba8f",
+        "name": "Histórico de Fumaça",
+        "group": "grupo-fumaca",
+        "order": 2,
+        "width": 6,
+        "height": 3,
+        "label": "Histórico Fumaça",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "colors": [
+            "#ff0000"
+        ],
+        "outputs": 1,
+        "x": 870,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "faea8032daadd538",
+        "type": "ui_text",
+        "z": "f1ebeeacd467ba8f",
+        "group": "grupo-alerta",
+        "order": 1,
+        "width": 6,
+        "height": 2,
+        "name": "Texto Alerta",
+        "label": "Alertas:",
+        "format": "Fumaça: {{msg.payload.fumaca}} | Vento: {{msg.payload.vento}} | Água: {{msg.payload.agua}}",
+        "layout": "row-spread",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3c3cf10796c46c0b",
+        "type": "mqtt-broker",
+        "name": "HiveMQ",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "grupo-fumaca",
+        "type": "ui_group",
+        "name": "Fumaça",
+        "tab": "aba-ecofire",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "grupo-vento",
+        "type": "ui_group",
+        "name": "Vento",
+        "tab": "aba-ecofire",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grupo-agua",
+        "type": "ui_group",
+        "name": "Enchente",
+        "tab": "aba-ecofire",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grupo-alerta",
+        "type": "ui_group",
+        "name": "Alertas",
+        "tab": "aba-ecofire",
+        "order": 4,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "aba-ecofire",
+        "type": "ui_tab",
+        "name": "EcoSafe",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
