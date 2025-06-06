@@ -11,7 +11,7 @@ Este projeto propõe uma solução de monitoramento em tempo real utilizando dis
 
 ### Requisitos
 
-- Conta ativa na plataforma Wokwi: [https://wokwi.com/projects/432261047943865345]
+- Conta ativa na plataforma Wokwi
 - Microcontrolador virtual (ESP32 ou Arduino com WiFi) com sensores simulados
 - Node.js instalado (v14 ou superior)
 - Node-RED instalado (`npm install -g node-red`)
@@ -131,3 +131,9 @@ Com essa estrutura, o projeto oferece uma solução IoT de baixo custo, eficient
 - **Pedro Gomes** – RM 553907  
 - **Luiz Felipe Abreu** – RM 555197  
 - **Matheus Munuera** – RM 557812
+
+---
+
+### Link do projeto Wokwi
+
+ 🔗 link: https://wokwi.com/projects/432261047943865345
